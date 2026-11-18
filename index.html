@@ -4,197 +4,454 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hasta siempre 💐</title>
+<title>Una carta para Mary 💌</title>
 
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    font-family: 'Georgia', serif;
-    background: linear-gradient(135deg, #fce4ec, #e1bee7, #f8bbd0);
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+  background: linear-gradient(135deg,#fce4ec,#f8bbd0,#eadcf8);
+  font-family: Georgia, serif;
+  color: #81536a;
 }
 
-.card {
-    position: relative;
-    width: 90%;
-    max-width: 550px;
-    min-height: 480px;
-    padding: 45px 30px;
-    text-align: center;
-    border-radius: 25px;
-    background: rgba(255,255,255,0.88);
-    box-shadow: 0 15px 50px rgba(120,50,100,.2);
-    z-index: 2;
-    animation: appear 1.5s ease;
+.petal {
+  position: fixed;
+  top: -40px;
+  z-index: 0;
+  pointer-events: none;
+  animation: falling linear forwards;
 }
 
-h1 {
-    color: #ad5685;
-    font-size: 36px;
-    margin-bottom: 15px;
-    animation: glow 2s infinite alternate;
+@keyframes falling {
+  to { transform: translateY(110vh) rotate(500deg); }
 }
 
-.name {
-    color: #c65d91;
-    font-size: 30px;
-    font-weight: bold;
-    margin: 20px 0;
+.container {
+  width: 95%;
+  max-width: 520px;
+  min-height: 580px;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
 }
 
-.message {
-    color: #685263;
-    font-size: 18px;
-    line-height: 1.8;
+/* PORTADA */
+
+.cover {
+  width: 100%;
+  min-height: 460px;
+  padding: 35px 20px;
+  border-radius: 12px;
+  background: #fff9f4;
+  border: 2px solid #e9b8cb;
+  box-shadow: 0 15px 45px #9e577455;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  animation: appear 1s ease;
 }
 
-.heart {
-    font-size: 45px;
-    margin: 20px;
-    animation: heartbeat 1.5s infinite;
+.cover::before {
+  content: "✿";
+  position: absolute;
+  top: 12px;
+  left: 17px;
+  font-size: 35px;
+  color: #d88eae;
 }
 
-.signature {
-    margin-top: 25px;
-    color: #ad5685;
-    font-size: 20px;
-    font-style: italic;
+.cover::after {
+  content: "✿";
+  position: absolute;
+  bottom: 12px;
+  right: 17px;
+  font-size: 35px;
+  color: #d88eae;
+}
+
+.flower {
+  font-size: 60px;
+  margin-bottom: 15px;
+}
+
+.cover h1 {
+  color: #bd6c91;
+  font-size: 35px;
+  margin: 10px 0;
+}
+
+.cover p {
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+.envelope {
+  width: 230px;
+  height: 145px;
+  background: #e8a9c2;
+  position: relative;
+  margin: 25px auto;
+  border-radius: 5px;
+  box-shadow: 0 8px 20px #b56b8b55;
+}
+
+.envelope:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-left: 115px solid transparent;
+  border-right: 115px solid transparent;
+  border-top: 85px solid #d988a9;
+  z-index: 2;
+}
+
+.seal {
+  position: absolute;
+  top: 65px;
+  left: 92px;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: #ba668b;
+  color: white;
+  font-size: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
 }
 
 button {
-    margin-top: 25px;
-    padding: 13px 28px;
-    border: none;
-    border-radius: 30px;
-    color: white;
-    background: linear-gradient(45deg,#d66a9b,#a85ab7);
-    font-size: 16px;
-    cursor: pointer;
-    transition: .3s;
+  border: none;
+  padding: 13px 28px;
+  border-radius: 30px;
+  background: linear-gradient(45deg,#c76c96,#a65f9e);
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+  box-shadow: 0 5px 15px #b46c8b55;
+  transition: .3s;
+  font-family: Georgia,serif;
 }
 
 button:hover {
-    transform: scale(1.08);
-    box-shadow: 0 5px 20px #d66a9b88;
+  transform: scale(1.06);
 }
 
-.petalo {
-    position: fixed;
-    top: -30px;
-    font-size: 22px;
-    animation: caer linear infinite;
-    pointer-events: none;
-    z-index: 1;
+/* CARTA */
+
+.letter {
+  display: none;
+  width: 100%;
+  min-height: 570px;
+  padding: 35px 28px;
+  background: #fffdf8;
+  border: 2px solid #e9c6d4;
+  box-shadow: 0 15px 45px #9e577455;
+  border-radius: 5px;
+  position: relative;
+  animation: appear .8s ease;
 }
 
-.hidden-message {
-    display: none;
-    margin-top: 20px;
-    color: #a34d7d;
-    font-size: 17px;
-    line-height: 1.6;
-    animation: appear 1s ease;
+.letter:before {
+  content: "🌸";
+  position: absolute;
+  top: 8px;
+  right: 15px;
+  font-size: 28px;
 }
 
-@keyframes caer {
-    to {
-        transform: translateY(110vh) rotate(360deg);
-    }
+.letter:after {
+  content: "🌷";
+  position: absolute;
+  bottom: 8px;
+  left: 15px;
+  font-size: 28px;
+}
+
+.page {
+  display: none;
+  animation: appear .7s ease;
+}
+
+.page.active {
+  display: block;
+}
+
+.page-number {
+  color: #c17b9c;
+  font-size: 13px;
+  letter-spacing: 3px;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.page h2 {
+  color: #b5688c;
+  text-align: center;
+  font-size: 27px;
+}
+
+.page .dedication {
+  min-height: 280px;
+  font-size: 17px;
+  line-height: 1.9;
+  text-align: center;
+  white-space: pre-line;
+  color: #76576a;
+}
+
+.author {
+  text-align: center;
+  font-style: italic;
+  color: #bd7294;
+  font-size: 17px;
+  margin-top: 20px;
+}
+
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.navigation button {
+  padding: 11px 18px;
+}
+
+.counter {
+  font-size: 13px;
+  color: #ad7890;
+}
+
+.close {
+  display: block;
+  margin: 20px auto 0;
+  background: #a984a9;
 }
 
 @keyframes appear {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes heartbeat {
-    0%,100% { transform: scale(1); }
-    50% { transform: scale(1.2); }
-}
-
-@keyframes glow {
-    from { text-shadow: 0 0 5px #f8bbd0; }
-    to { text-shadow: 0 0 20px #e88bb9; }
+@media(max-width: 420px) {
+  .cover h1 { font-size: 29px; }
+  .letter { padding: 30px 20px; }
+  .page .dedication { font-size: 15px; }
 }
 </style>
 </head>
 
 <body>
 
-<div class="card">
+<div class="container">
 
-<h1>¡Hasta siempre, Mary! 💐</h1>
+  <!-- PORTADA DEL SOBRE -->
 
-<div class="heart">💖</div>
+  <section class="cover" id="cover">
 
-<p class="message">
-  Mary, hoy termina una etapa, pero quedan
-  muchísimos recuerdos que siempre llevaremos
-  en el corazón.
-  <br><br>
-  Gracias por tu amistad, tu alegría, tu apoyo,
-  las risas compartidas y por cada momento
-  que hizo especial nuestro día a día.
-  <br><br>
-  Te deseamos todo el éxito del mundo en este
-  nuevo camino. Que nunca te falten motivos
-  para sonreír, sueños por cumplir y personas
-  maravillosas a tu alrededor.
-</p>
+    <div class="flower">💐</div>
 
-<div class="signature">
-  ¡Te vamos a extrañar, Mary! ❤️
+    <p>Una pequeña sorpresa preparada con mucho cariño...</p>
+
+    <h1>Para Mary</h1>
+
+    <div class="envelope">
+      <div class="seal">♥</div>
+    </div>
+
+    <p>
+      Porque hay personas que dejan huellas
+      bonitas en nuestro camino.
+    </p>
+
+    <button onclick="openLetter()">
+      Abrir mi carta 💌
+    </button>
+
+    <p style="font-size:13px;color:#bd8aa1">
+      Con cariño, para alguien especial ✨
+    </p>
+
+  </section>
+
+  <!-- INTERIOR DE LA CARTA -->
+
+  <section class="letter" id="letter">
+
+    <!-- PAGINA 1 -->
+
+    <div class="page active" id="page1">
+      <div class="page-number">✿ DEDICATORIA 01 ✿</div>
+      <h2>Querida Mary 💗</h2>
+
+      <div class="dedication">
+        Aquí irá el primer mensaje de despedida.
+
+        Gracias por los momentos compartidos,
+        las sonrisas y las experiencias que
+        hicieron especial esta etapa.
+
+        Te deseo mucho éxito en este nuevo
+        camino que estás por comenzar.
+      </div>
+
+      <div class="author">
+        Con cariño, Persona 1 🌷
+      </div>
+    </div>
+
+    <!-- PAGINA 2 -->
+
+    <div class="page" id="page2">
+      <div class="page-number">✿ DEDICATORIA 02 ✿</div>
+      <h2>Un mensaje especial 🌸</h2>
+
+      <div class="dedication">
+        Aquí irá el segundo mensaje.
+
+        Que la vida te regale nuevas oportunidades,
+        grandes alegrías y muchos motivos
+        para seguir sonriendo.
+
+        Nunca olvides lo valiosa que eres
+        y todo lo bonito que compartiste.
+      </div>
+
+      <div class="author">
+        Con mucho cariño, Persona 2 💕
+      </div>
+    </div>
+
+    <!-- PAGINA 3 -->
+
+    <div class="page" id="page3">
+      <div class="page-number">✿ DEDICATORIA 03 ✿</div>
+      <h2>Hasta siempre, Mary 💐</h2>
+
+      <div class="dedication">
+        Aquí irá el tercer mensaje.
+
+        Las despedidas nunca son fáciles,
+        pero nos queda la alegría de haber
+        coincidido y compartido tantos momentos.
+
+        Te deseamos lo mejor hoy y siempre.
+        ¡Nunca dejes de brillar!
+      </div>
+
+      <div class="author">
+        Con cariño, Persona 3 ❤️
+      </div>
+    </div>
+
+    <!-- NAVEGACION -->
+
+    <div class="navigation">
+      <button onclick="changePage(-1)" id="prev">
+        ← Anterior
+      </button>
+
+      <span class="counter" id="counter">
+        1 de 3
+      </span>
+
+      <button onclick="changePage(1)" id="next">
+        Siguiente →
+      </button>
+    </div>
+
+    <button class="close" onclick="closeLetter()">
+      Cerrar carta 💌
+    </button>
+
+  </section>
+
 </div>
-
-<button onclick="mostrarMensaje()">
-  Abrir mensaje especial 💌
-</button>
-
-<div class="hidden-message" id="extra">
-  Las etapas terminan, pero las bonitas
-  amistades permanecen.
-  <br><br>
-  ¡Vuela alto, Mary! Nunca dejes de brillar. ✨
-  <br><br>
-  Con mucho cariño, tus compañeros. 🌷
-</div>
-
 
 <script>
-function mostrarMensaje() {
-    const mensaje = document.getElementById("extra");
-    mensaje.style.display = "block";
+let currentPage = 1;
+
+function openLetter() {
+  document.getElementById("cover").style.display = "none";
+  document.getElementById("letter").style.display = "block";
+  currentPage = 1;
+  updatePage();
 }
 
-// Crear pétalos flotantes
-const flores = ["🌸", "🌷", "💮", "✨", "💕"];
-
-function crearPetalo() {
-    const petalo = document.createElement("div");
-    petalo.className = "petalo";
-    petalo.innerHTML =
-        flores[Math.floor(Math.random() * flores.length)];
-
-    petalo.style.left = Math.random() * 100 + "vw";
-    petalo.style.animationDuration =
-        (4 + Math.random() * 6) + "s";
-    petalo.style.opacity = Math.random() * 0.7 + 0.3;
-
-    document.body.appendChild(petalo);
-
-    setTimeout(() => petalo.remove(), 10000);
+function closeLetter() {
+  document.getElementById("letter").style.display = "none";
+  document.getElementById("cover").style.display = "flex";
 }
 
-setInterval(crearPetalo, 400);
+function changePage(direction) {
+  currentPage += direction;
+
+  if(currentPage < 1) currentPage = 1;
+  if(currentPage > 3) currentPage = 3;
+
+  updatePage();
+}
+
+function updatePage() {
+  document.querySelectorAll(".page").forEach(page => {
+    page.classList.remove("active");
+  });
+
+  document.getElementById("page" + currentPage)
+    .classList.add("active");
+
+  document.getElementById("counter").textContent =
+    currentPage + " de 3";
+
+  document.getElementById("prev").disabled =
+    currentPage === 1;
+
+  document.getElementById("next").disabled =
+    currentPage === 3;
+
+  document.getElementById("prev").style.opacity =
+    currentPage === 1 ? ".4" : "1";
+
+  document.getElementById("next").textContent =
+    currentPage === 3 ? "Fin ❤️" : "Siguiente →";
+}
+
+// Pétalos flotantes
+
+const decorations = ["🌸","🌷","💕","✨","🌺"];
+
+setInterval(() => {
+  const petal = document.createElement("div");
+  petal.className = "petal";
+  petal.textContent =
+    decorations[Math.floor(Math.random()*decorations.length)];
+
+  petal.style.left = Math.random()*100 + "vw";
+  petal.style.fontSize = (14+Math.random()*18)+"px";
+  petal.style.animationDuration = (5+Math.random()*6)+"s";
+
+  document.body.appendChild(petal);
+
+  setTimeout(() => petal.remove(),11000);
+},450);
 </script>
 
 </body>
