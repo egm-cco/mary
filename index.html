@@ -256,6 +256,111 @@ button:hover {
   .letter { padding: 30px 20px; }
   .page .dedication { font-size: 15px; }
 }
+
+
+/* PAGINA FINAL */
+
+.final-page {
+  text-align: center;
+}
+
+.bouquet {
+  font-size: 105px;
+  margin: 20px auto;
+  animation: bouquetAppear 1.5s ease, bouquetFloat 3s ease-in-out infinite;
+  filter: drop-shadow(0 8px 8px #d68ba866);
+}
+
+.success-message {
+  font-size: 16px;
+  line-height: 1.9;
+  color: #80576c;
+  margin: 15px 0;
+}
+
+.success-message p {
+  margin: 12px 0;
+}
+
+.highlight {
+  color: #bd648e;
+  font-weight: bold;
+  font-size: 19px;
+}
+
+.farewell {
+  margin-top: 30px;
+  font-size: 17px;
+  font-style: italic;
+  color: #a66b89;
+}
+
+.farewell strong {
+  display: block;
+  margin-top: 10px;
+  font-size: 20px;
+  color: #bc648c;
+}
+
+@keyframes bouquetAppear {
+  from {
+    opacity: 0;
+    transform: scale(.3) rotate(-15deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+  }
+}
+
+@keyframes bouquetFloat {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -9px; }
+}
+
+/* BOTONES DE NAVEGACIÓN */
+
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 25px;
+}
+
+.navigation button {
+  border: 1px solid #e9b7cd;
+  border-radius: 30px;
+  padding: 12px 20px;
+  background: linear-gradient(135deg,#d88eae,#b66c98);
+  color: white;
+  font-family: Georgia,serif;
+  font-size: 14px;
+  font-weight: bold;
+  box-shadow: 0 5px 15px #bd789755;
+  transition: all .3s ease;
+}
+
+.navigation button:hover:not(:disabled) {
+  transform: translateY(-4px) scale(1.04);
+  box-shadow: 0 8px 20px #bd789777;
+}
+
+.navigation button:disabled {
+  opacity: .35;
+  cursor: not-allowed;
+}
+
+.counter {
+  background: #f9e7ef;
+  border: 1px solid #edc4d5;
+  border-radius: 20px;
+  padding: 8px 12px;
+  color: #a65f83;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
 </style>
 </head>
 
@@ -362,6 +467,43 @@ button:hover {
       </div>
     </div>
 
+
+<!-- PAGINA 4: DESPEDIDA FINAL -->
+
+<div class="page final-page" id="page4">
+
+  <div class="page-number">✿ CON TODO NUESTRO CARIÑO ✿</div>
+
+  <h2>Un nuevo comienzo para ti 💗</h2>
+
+  <div class="bouquet">
+    💐
+  </div>
+
+  <div class="success-message">
+    <p>
+      Mary, que esta nueva etapa esté llena de
+      oportunidades, aprendizajes y grandes éxitos.
+    </p>
+
+    <p>
+      Que cada paso que des te acerque a tus sueños
+      y que nunca te falten motivos para sonreír.
+    </p>
+
+    <p class="highlight">
+      ¡Te deseamos lo mejor hoy y siempre!
+    </p>
+  </div>
+
+  <div class="farewell">
+    Atentamente,
+    <strong>Tus compañeros ❤️</strong>
+  </div>
+
+</div>
+
+
     <!-- NAVEGACION -->
 
     <div class="navigation">
@@ -387,7 +529,9 @@ button:hover {
 </div>
 
 <script>
+   
 let currentPage = 1;
+const totalPages = 4;
 
 function openLetter() {
   document.getElementById("cover").style.display = "none";
@@ -402,10 +546,14 @@ function closeLetter() {
 }
 
 function changePage(direction) {
+  if (currentPage === totalPages && direction === 1) {
+    return;
+  }
+
   currentPage += direction;
 
-  if(currentPage < 1) currentPage = 1;
-  if(currentPage > 3) currentPage = 3;
+  if (currentPage < 1) currentPage = 1;
+  if (currentPage > totalPages) currentPage = totalPages;
 
   updatePage();
 }
@@ -415,43 +563,31 @@ function updatePage() {
     page.classList.remove("active");
   });
 
-  document.getElementById("page" + currentPage)
-    .classList.add("active");
+  const activePage = document.getElementById("page" + currentPage);
+
+  activePage.classList.add("active");
+
+  // Reiniciar animación del ramo al entrar a la página final
+  if (currentPage === 4) {
+    const bouquet = document.querySelector(".bouquet");
+    bouquet.style.animation = "none";
+    void bouquet.offsetWidth;
+    bouquet.style.animation = "";
+  }
 
   document.getElementById("counter").textContent =
-    currentPage + " de 3";
+    currentPage + " de " + totalPages;
 
   document.getElementById("prev").disabled =
     currentPage === 1;
 
-  document.getElementById("next").disabled =
-    currentPage === 3;
-
-  document.getElementById("prev").style.opacity =
-    currentPage === 1 ? ".4" : "1";
-
   document.getElementById("next").textContent =
-    currentPage === 3 ? "Fin ❤️" : "Siguiente →";
+    currentPage === totalPages ? "Fin ❤️" : "Siguiente ✿";
+
+  document.getElementById("next").disabled =
+    currentPage === totalPages;
 }
 
-// Pétalos flotantes
-
-const decorations = ["🌸","🌷","💕","✨","🌺"];
-
-setInterval(() => {
-  const petal = document.createElement("div");
-  petal.className = "petal";
-  petal.textContent =
-    decorations[Math.floor(Math.random()*decorations.length)];
-
-  petal.style.left = Math.random()*100 + "vw";
-  petal.style.fontSize = (14+Math.random()*18)+"px";
-  petal.style.animationDuration = (5+Math.random()*6)+"s";
-
-  document.body.appendChild(petal);
-
-  setTimeout(() => petal.remove(),11000);
-},450);
 </script>
 
 </body>
