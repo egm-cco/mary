@@ -1,0 +1,201 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hasta siempre 💐</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    font-family: 'Georgia', serif;
+    background: linear-gradient(135deg, #fce4ec, #e1bee7, #f8bbd0);
+}
+
+.card {
+    position: relative;
+    width: 90%;
+    max-width: 550px;
+    min-height: 480px;
+    padding: 45px 30px;
+    text-align: center;
+    border-radius: 25px;
+    background: rgba(255,255,255,0.88);
+    box-shadow: 0 15px 50px rgba(120,50,100,.2);
+    z-index: 2;
+    animation: appear 1.5s ease;
+}
+
+h1 {
+    color: #ad5685;
+    font-size: 36px;
+    margin-bottom: 15px;
+    animation: glow 2s infinite alternate;
+}
+
+.name {
+    color: #c65d91;
+    font-size: 30px;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+.message {
+    color: #685263;
+    font-size: 18px;
+    line-height: 1.8;
+}
+
+.heart {
+    font-size: 45px;
+    margin: 20px;
+    animation: heartbeat 1.5s infinite;
+}
+
+.signature {
+    margin-top: 25px;
+    color: #ad5685;
+    font-size: 20px;
+    font-style: italic;
+}
+
+button {
+    margin-top: 25px;
+    padding: 13px 28px;
+    border: none;
+    border-radius: 30px;
+    color: white;
+    background: linear-gradient(45deg,#d66a9b,#a85ab7);
+    font-size: 16px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+button:hover {
+    transform: scale(1.08);
+    box-shadow: 0 5px 20px #d66a9b88;
+}
+
+.petalo {
+    position: fixed;
+    top: -30px;
+    font-size: 22px;
+    animation: caer linear infinite;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.hidden-message {
+    display: none;
+    margin-top: 20px;
+    color: #a34d7d;
+    font-size: 17px;
+    line-height: 1.6;
+    animation: appear 1s ease;
+}
+
+@keyframes caer {
+    to {
+        transform: translateY(110vh) rotate(360deg);
+    }
+}
+
+@keyframes appear {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes heartbeat {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 5px #f8bbd0; }
+    to { text-shadow: 0 0 20px #e88bb9; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<h1>¡Hasta siempre, Mary! 💐</h1>
+
+<div class="heart">💖</div>
+
+<p class="message">
+  Mary, hoy termina una etapa, pero quedan
+  muchísimos recuerdos que siempre llevaremos
+  en el corazón.
+  <br><br>
+  Gracias por tu amistad, tu alegría, tu apoyo,
+  las risas compartidas y por cada momento
+  que hizo especial nuestro día a día.
+  <br><br>
+  Te deseamos todo el éxito del mundo en este
+  nuevo camino. Que nunca te falten motivos
+  para sonreír, sueños por cumplir y personas
+  maravillosas a tu alrededor.
+</p>
+
+<div class="signature">
+  ¡Te vamos a extrañar, Mary! ❤️
+</div>
+
+<button onclick="mostrarMensaje()">
+  Abrir mensaje especial 💌
+</button>
+
+<div class="hidden-message" id="extra">
+  Las etapas terminan, pero las bonitas
+  amistades permanecen.
+  <br><br>
+  ¡Vuela alto, Mary! Nunca dejes de brillar. ✨
+  <br><br>
+  Con mucho cariño, tus compañeros. 🌷
+</div>
+
+
+<script>
+function mostrarMensaje() {
+    const mensaje = document.getElementById("extra");
+    mensaje.style.display = "block";
+}
+
+// Crear pétalos flotantes
+const flores = ["🌸", "🌷", "💮", "✨", "💕"];
+
+function crearPetalo() {
+    const petalo = document.createElement("div");
+    petalo.className = "petalo";
+    petalo.innerHTML =
+        flores[Math.floor(Math.random() * flores.length)];
+
+    petalo.style.left = Math.random() * 100 + "vw";
+    petalo.style.animationDuration =
+        (4 + Math.random() * 6) + "s";
+    petalo.style.opacity = Math.random() * 0.7 + 0.3;
+
+    document.body.appendChild(petalo);
+
+    setTimeout(() => petalo.remove(), 10000);
+}
+
+setInterval(crearPetalo, 400);
+</script>
+
+</body>
+</html>
